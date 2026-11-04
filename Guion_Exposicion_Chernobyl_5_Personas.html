@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chernóbil · Guion de exposición para cinco personas</title>
+<style>
+  :root{
+    --ink:#1b1e1e;
+    --dark:#141717;
+    --red:#a3382d;
+    --amber:#a87428;
+    --paper:#fffefa;
+    --cream:#f4f0e7;
+    --cream-2:#faf8f2;
+    --line:#d8d3c7;
+    --gray:#5f6562;
+    --mid:#8a8f8b;
+    --sans:"Arial","Helvetica Neue",Helvetica,sans-serif;
+    --serif:"Georgia","Times New Roman",serif;
+    --mono:"Consolas","IBM Plex Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:#202323;
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:10.2pt;
+    line-height:1.55;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .screen-bar{
+    position:sticky;top:0;z-index:10;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    width:min(210mm,100%);margin:0 auto;padding:12px 2mm;
+    background:rgba(24,27,27,.96);backdrop-filter:blur(8px);
+    color:#cfd2ca;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .screen-bar strong{color:#fff;font-weight:400}
+  .print-btn{
+    appearance:none;border:1px solid #a87428;background:#a87428;color:#171919;
+    padding:9px 14px;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+    text-transform:uppercase;cursor:pointer;border-radius:1px;
+  }
+  .print-btn:hover{background:#c59745}
+  .document{
+    width:210mm;
+    margin:0 auto 40px;
+    padding:18mm 18mm 16mm;
+    background:var(--paper);
+    box-shadow:0 20px 70px rgba(0,0,0,.48);
+  }
+  .cover{
+    min-height:249mm;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    page-break-after:always;
+    break-after:page;
+  }
+  .cover-band{
+    background:var(--dark);color:#e9e2d5;
+    padding:9px 13px;
+    display:flex;justify-content:space-between;gap:15px;
+    font-family:var(--mono);font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .cover-band span:last-child{color:#aeb6ae}
+  .cover-main{padding-top:35mm}
+  .kicker{
+    font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--red);font-weight:700;margin:0 0 8px;
+  }
+  .cover h1{
+    margin:0;
+    font-family:var(--sans);
+    font-size:76px;line-height:.84;letter-spacing:-.02em;
+    font-weight:800;color:var(--ink);
+  }
+  .cover-sub{
+    margin:13px 0 0;
+    font-family:var(--serif);font-size:26px;line-height:1.08;
+    font-style:italic;color:var(--red);
+  }
+  .redline{height:3px;background:var(--red);width:100%;margin:22px 0 20px}
+  .cover-lead{
+    font-family:var(--serif);
+    font-size:16px;line-height:1.45;color:#3e4542;
+    max-width:150mm;margin:0 0 22px;
+  }
+  .meta-row{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+    margin:0 0 30mm;
+  }
+  .meta-card{background:var(--cream);border-top:1px solid var(--line);padding:11px 12px}
+  .meta-card b{
+    display:block;font-family:var(--mono);font-size:7px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:4px;
+  }
+  .meta-card span{display:block;font-size:10.4px;font-weight:700;color:var(--ink)}
+  .team-title{
+    font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--red);font-weight:700;margin:0 0 8px;
+  }
+  .team-table{width:100%;border-collapse:collapse;margin:0 0 14px}
+  .team-table td{border:1px solid var(--line);padding:7px 9px;font-size:8.5px}
+  .team-table td:first-child{
+    width:42px;background:var(--dark);color:#fff;font-family:var(--mono);
+    font-size:10px;text-align:center;letter-spacing:.06em;
+  }
+  .cover-note{
+    border-top:1px solid var(--line);padding-top:9px;
+    display:flex;justify-content:space-between;gap:18px;
+    font-family:var(--mono);font-size:6.8px;letter-spacing:.07em;
+    color:var(--gray);text-transform:uppercase;
+  }
+  .chapter{page-break-before:always;break-before:page}
+  .section-head{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:15px;
+    border-bottom:1px solid var(--line);padding-bottom:7px;margin-bottom:14px;
+  }
+  .section-head .left{font-family:var(--mono);font-size:7px;letter-spacing:.13em;text-transform:uppercase;color:var(--mid)}
+  .section-head .right{font-family:var(--mono);font-size:7px;letter-spacing:.11em;text-transform:uppercase;color:var(--mid);white-space:nowrap}
+  h2{
+    font-family:var(--sans);font-size:27px;line-height:1.05;letter-spacing:-.025em;
+    font-weight:800;margin:0 0 7px;color:var(--ink);
+  }
+  h3{
+    font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--red);
+    margin:17px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line);
+    break-after:avoid;
+  }
+  .lead{font-family:var(--serif);font-size:13.2px;line-height:1.45;color:#3e4542;margin:0 0 15px}
+  p{margin:0 0 7px;orphans:3;widows:3}
+  strong{font-weight:700;color:var(--ink)}
+  .small{font-size:9.2px;color:var(--gray);line-height:1.5}
+  .caption{font-family:var(--mono);font-size:6.8px;letter-spacing:.07em;text-transform:uppercase;color:var(--mid)}
+  .assign{width:100%;border-collapse:collapse;margin:5px 0 13px;font-size:9px;break-inside:avoid}
+  .assign th{
+    background:var(--dark);color:#eee7dc;text-align:left;
+    font-family:var(--mono);font-size:6.6px;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:400;padding:7px 7px;border:1px solid #2c3230;
+  }
+  .assign td{border:1px solid var(--line);padding:7px;vertical-align:top;line-height:1.35}
+  .assign tr:nth-child(even) td{background:var(--cream-2)}
+  .assign .num{font-weight:700;color:var(--red);font-family:var(--mono);font-size:8.5px}
+  .assign .mins{font-family:var(--mono);font-size:8px;color:var(--amber);font-weight:700;white-space:nowrap}
+  .assign .role{color:var(--gray);font-size:8.4px}
+  .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:3px 0 15px;break-inside:avoid}
+  .timeline div{background:var(--cream);border-top:2px solid var(--red);padding:8px}
+  .timeline b{display:block;font-family:var(--mono);font-size:6.3px;letter-spacing:.08em;color:var(--amber);text-transform:uppercase;margin-bottom:3px}
+  .timeline strong{display:block;font-size:17px;line-height:1;color:var(--red);margin-bottom:3px}
+  .timeline span{display:block;font-size:7.2px;line-height:1.3;color:var(--gray)}
+  .rules{list-style:none;margin:3px 0 14px;padding:0;counter-reset:rule}
+  .rules li{
+    position:relative;padding-left:30px;margin:0 0 7px;
+    font-size:9.5px;line-height:1.45;break-inside:avoid;
+  }
+  .rules li::before{
+    counter-increment:rule;content:counter(rule,decimal-leading-zero);
+    position:absolute;left:0;top:1px;font-family:var(--mono);font-size:7px;
+    color:var(--red);font-weight:700;letter-spacing:.05em;
+  }
+  .callout{
+    background:var(--cream);
+    border-left:3px solid var(--amber);
+    padding:10px 13px;margin:12px 0;
+    font-size:9.2px;line-height:1.5;
+    break-inside:avoid;
+  }
+  .callout.danger{background:#f6ece8;border-left-color:var(--red)}
+  .callout b{
+    display:block;font-family:var(--mono);font-size:7px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--amber);margin-bottom:4px;
+  }
+  .callout.danger b{color:var(--red)}
+  .callout p{margin:0 0 4px}
+  .callout p:last-child{margin-bottom:0}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start}
+  .tech-table{width:100%;border-collapse:collapse;font-size:8.6px;break-inside:avoid}
+  .tech-table th{
+    background:var(--cream);color:var(--gray);text-align:left;padding:6px 7px;
+    font-family:var(--mono);font-size:6.5px;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--line);font-weight:400;
+  }
+  .tech-table td{border:1px solid var(--line);padding:6px 7px;vertical-align:top;line-height:1.4}
+  .tech-table tr:nth-child(even) td{background:#fcfaf5}
+  .key{font-family:var(--mono);font-size:8px;color:var(--amber);font-weight:700;white-space:nowrap}
+  .check{list-style:none;margin:7px 0 0;padding:0}
+  .check li{position:relative;padding:4px 0 4px 20px;font-size:9.4px;line-height:1.45;break-inside:avoid}
+  .check li::before{content:"□";position:absolute;left:0;color:var(--red);font-size:11px;line-height:1}
+  .speaker-banner{
+    display:grid;grid-template-columns:1fr 34mm;gap:0;margin:0 0 12px;
+    break-inside:avoid;
+  }
+  .speaker-banner .main{background:var(--dark);color:#fff;padding:16px 17px}
+  .speaker-banner .main .pnum{
+    font-family:var(--mono);font-size:7px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:4px;
+  }
+  .speaker-banner h2{color:#fff;font-size:25px;line-height:1;margin:0 0 5px}
+  .speaker-banner .name-line{font-family:var(--mono);font-size:6.8px;color:#b9beb8}
+  .speaker-banner .side{background:var(--red);color:#fff;padding:16px 10px;text-align:center}
+  .speaker-banner .side b{
+    display:block;font-family:var(--mono);font-size:6.3px;letter-spacing:.1em;
+    text-transform:uppercase;color:#f0d3c9;font-weight:400;margin-bottom:4px;
+  }
+  .speaker-banner .side strong{display:block;font-size:18px;line-height:1;margin-bottom:4px}
+  .speaker-banner .side span{font-family:var(--mono);font-size:6.7px;font-weight:700}
+  .mission{
+    margin:0 0 12px;padding:7px 0 0;border-top:1px solid var(--line);
+    font-family:var(--serif);font-size:12px;line-height:1.35;font-style:italic;color:var(--red);
+  }
+  .anchors{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 12px;break-inside:avoid}
+  .anchor{background:var(--cream-2);padding:8px;border-top:1px solid transparent}
+  .anchor b{
+    display:block;font-family:var(--mono);font-size:6.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--amber);margin-bottom:3px;font-weight:700;
+  }
+  .anchor span{display:block;font-size:8.5px;line-height:1.4;color:#454b48}
+  .script{font-size:10.4px;line-height:1.55}
+  .script h3{margin-top:13px}
+  .cue{
+    margin:6px 0 5px;padding:5px 8px 5px 10px;
+    border-left:2px solid var(--amber);background:#fbf7ed;
+    font-family:var(--mono);font-size:7.9px;line-height:1.5;color:#79571f;
+    break-inside:avoid;
+  }
+  .cue::before{content:"▸  ";font-weight:700}
+  .transition{
+    background:#f6ece8;border-left:3px solid var(--red);
+    padding:9px 12px;margin:12px 0;break-inside:avoid;
+  }
+  .transition b{
+    display:block;font-family:var(--mono);font-size:6.8px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--red);margin-bottom:4px;font-weight:700;
+  }
+  .transition p{font-family:var(--serif);font-size:10.8px;line-height:1.45;font-style:italic;margin:0}
+  .qa{background:var(--cream-2);border:1px solid var(--line);padding:10px 12px;margin:14px 0 10px;break-inside:avoid}
+  .qa h3{margin:0 0 7px;border-bottom:1px solid var(--line)}
+  .qa p{font-size:9px;line-height:1.45;margin:0 0 6px}
+  .qa p:last-child{margin-bottom:0}
+  .qa b{color:var(--red);font-family:var(--mono);font-size:7.6px;letter-spacing:.02em}
+  .sources{
+    display:flex;justify-content:space-between;gap:12px;
+    border-top:1px solid var(--line);margin-top:13px;padding-top:6px;
+    font-family:var(--mono);font-size:6.5px;letter-spacing:.05em;
+    color:var(--mid);text-transform:uppercase;
+  }
+  .final-marker{
+    background:var(--dark);color:#fff;padding:13px 15px;margin:5px 0 14px;
+  }
+  .final-marker .k{font-family:var(--mono);font-size:7px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;margin-bottom:4px}
+  .final-marker h2{color:#fff;margin:0}
+  .final-quote{
+    font-family:var(--serif);font-size:20px;line-height:1.25;font-style:italic;
+    color:var(--ink);border-left:3px solid var(--red);padding:8px 0 8px 15px;margin:15px 0 5px;
+  }
+  .final-attribution{font-family:var(--mono);font-size:6.8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin:0 0 18px 18px}
+  .source-list{font-size:8.3px;line-height:1.5}
+  .source-list a{color:#45514c;text-decoration:none;border-bottom:1px solid var(--line)}
+  .source-list li{margin-bottom:3px}
+  .page-note{
+    font-family:var(--mono);font-size:6.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--mid);border-top:1px solid var(--line);margin-top:14px;padding-top:5px;
+    display:flex;justify-content:space-between;gap:15px;
+  }
+  .screen-note{
+    width:min(210mm,100%);margin:0 auto;padding:0 2mm 18px;
+    color:#a8ada6;font-family:var(--mono);font-size:8px;line-height:1.5;
+  }
+  .screen-note strong{color:#ddd7ca;font-weight:400}
+  @media (max-width:900px){
+    body{background:#202323}
+    .document{width:100%;padding:10mm 7mm 14mm}
+    .screen-bar{position:static;width:100%;padding:10px 7px;font-size:8px}
+    .screen-bar span{max-width:70%}
+    .cover{min-height:0}
+    .cover-main{padding-top:20mm}
+    .cover h1{font-size:52px}
+    .cover-sub{font-size:20px}
+    .cover-lead{font-size:14px}
+    .meta-row,.three-col,.two-col{grid-template-columns:1fr}
+    .timeline{grid-template-columns:1fr 1fr}
+    .anchors{grid-template-columns:1fr}
+    .speaker-banner{grid-template-columns:1fr}
+    .speaker-banner .side{display:flex;justify-content:space-between;text-align:left;gap:10px}
+    .speaker-banner .side b{margin:0}
+    .speaker-banner h2{font-size:22px}
+    .assign{font-size:8.2px}
+    .assign .role{display:none}
+    .screen-note{padding:0 7px 12px}
+  }
+  @page{size:A4;margin:14mm 16mm 14mm}
+  @media print{
+    body{background:#fff;font-size:10pt}
+    .screen-bar,.screen-note,.screen-only{display:none!important}
+    .document{width:auto;margin:0;padding:0;box-shadow:none;background:#fff}
+    .cover{min-height:calc(297mm - 28mm)}
+    .chapter{page-break-before:always;break-before:page}
+    .cover{page-break-after:always;break-after:page}
+    h2{font-size:25px}
+    .speaker-banner h2{font-size:23px}
+    .assign,.tech-table,.timeline,.callout,.transition,.qa,.speaker-banner,.anchors{break-inside:avoid}
+    .cue{break-inside:avoid}
+    a{color:inherit;text-decoration:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="screen-bar">
+  <span><strong>Guion de exposición · 2026</strong> · documento A4 listo para imprimir</span>
+  <button class="print-btn" type="button" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<main class="document">
+
+  <!-- PORTADA -->
+  <section class="cover">
+    <div>
+      <div class="cover-band">
+        <span>Archivo de exposición · 2026</span>
+        <span>Guion de cinco voces</span>
+      </div>
+
+      <div class="cover-main">
+        <p class="kicker">Guion de exposición · trabajo en equipo</p>
+        <h1>CHERNÓBIL</h1>
+        <p class="cover-sub">La noche que cambió la historia</p>
+        <div class="redline"></div>
+        <p class="cover-lead">Reparto, cronología y textos palabra por palabra para una exposición de <strong>20 minutos</strong> sobre el accidente del 26 de abril de 1986.</p>
+
+        <div class="meta-row">
+          <div class="meta-card"><b>Formato</b><span>10 capítulos · 5 voces</span></div>
+          <div class="meta-card"><b>Duración</b><span>20 min · versión 15</span></div>
+          <div class="meta-card"><b>Uso</b><span>Exposición en clase</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="team-title">Equipo · escriban sus nombres antes de imprimir</p>
+      <table class="team-table">
+        <tr><td>P1</td><td>Nombre: __________________________________________________ &nbsp; Firma: ________________</td></tr>
+        <tr><td>P2</td><td>Nombre: __________________________________________________ &nbsp; Firma: ________________</td></tr>
+        <tr><td>P3</td><td>Nombre: __________________________________________________ &nbsp; Firma: ________________</td></tr>
+        <tr><td>P4</td><td>Nombre: __________________________________________________ &nbsp; Firma: ________________</td></tr>
+        <tr><td>P5</td><td>Nombre: __________________________________________________ &nbsp; Firma: ________________</td></tr>
+      </table>
+      <div class="cover-note">
+        <span>26 de abril de 1986 · 01:23 · Unidad 4 · Prípiat, Ucrania</span>
+        <span>Basado en la presentación interactiva index.html</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section class="chapter" id="plan">
+    <header class="section-head"><span class="left">El plan de la exposición</span><span class="right">20 minutos · 5 bloques</span></header>
+    <h2>Cinco voces, una sola historia</h2>
+    <p class="lead">La presentación tiene diez capítulos. Cada persona expone dos y entrega el hilo narrativo a la siguiente. El objetivo no es recitar datos: es que el público entienda <strong>cómo funcionaba el reactor, cómo falló, a quién afectó y qué aprendimos</strong>.</p>
+
+    <table class="assign">
+      <thead><tr><th style="width:7%">#</th><th style="width:10%">Cap.</th><th style="width:38%">Enfoque</th><th style="width:10%">Min.</th><th style="width:35%">Función en el equipo</th></tr></thead>
+      <tbody>
+        <tr><td class="num">01</td><td>1–2</td><td>El reactor y la trampa de la prueba</td><td class="mins">4 min</td><td class="role">Apertura · datos técnicos</td></tr>
+        <tr><td class="num">02</td><td>3–4</td><td>La explosión y los primeros en entrar</td><td class="mins">4 min</td><td class="role">Clímax · respaldo técnico</td></tr>
+        <tr><td class="num">03</td><td>5–6</td><td>Prípiat y la nube sobre Europa</td><td class="mins">4 min</td><td class="role">Escala humana y global · tiempo</td></tr>
+        <tr><td class="num">04</td><td>7–8</td><td>Liquidadores y consecuencias</td><td class="mins">4,5 min</td><td class="role">Evidencia y salud · fuentes</td></tr>
+        <tr><td class="num">05</td><td>9–10</td><td>Encerrar el reactor y aprender</td><td class="mins">3,5 min</td><td class="role">Cierre · cita final</td></tr>
+      </tbody>
+    </table>
+
+    <div class="timeline">
+      <div><b>Bloque 01</b><strong>0:00</strong><span>Contexto y prueba</span></div>
+      <div><b>Bloque 02</b><strong>4:00</strong><span>Explosión y bomberos</span></div>
+      <div><b>Bloque 03</b><strong>8:00</strong><span>Prípiat y Europa</span></div>
+      <div><b>Bloque 04</b><strong>12:00</strong><span>Liquidadores y salud</span></div>
+      <div><b>Bloque 05</b><strong>16:30</strong><span>NSC y reflexión</span></div>
+    </div>
+
+    <h3>Cinco reglas de oro</h3>
+    <ol class="rules">
+      <li><strong>No lean la pantalla.</strong> El panel es apoyo visual; el guion es suyo. Cada persona elige tres datos y los explica.</li>
+      <li><strong>Una interacción por bloque.</strong> Demasiados clics distraen. Hagan la acción principal y dejen que el público mire.</li>
+      <li><strong>Esperen la transición.</strong> Entre capítulos la escena tarda un segundo o dos en cargar. No hablen encima del cambio.</li>
+      <li><strong>Las cifras se explican, no se recitan.</strong> Digan qué significan antes de dar el número.</li>
+      <li><strong>La precisión importa más que el dramatismo.</strong> Si una estimación es incierta, díganlo: “se estima”, “se atribuye”.</li>
+    </ol>
+
+    <div class="callout">
+      <b>Si el tiempo se reduce a 15 minutos</b>
+      <p>Cada persona baja a unos <strong>3 minutos</strong>. Conserven la primera frase de su bloque, el dato principal y la transición.</p>
+      <p>Eliminen la segunda interacción, los detalles secundarios y las respuestas largas de “Si te preguntan”. No se elimine el cierre: la cita final necesita aire y silencio.</p>
+    </div>
+
+    <div class="page-note"><span>Guion de exposición · Chernóbil</span><span>Plan general · 20 min</span></div>
+  </section>
+
+  <!-- TÉCNICA -->
+  <section class="chapter" id="tecnica">
+    <header class="section-head"><span class="left">Montaje y ejecución</span><span class="right">Documento de trabajo</span></header>
+    <h2>Cómo usar la presentación</h2>
+    <p class="lead">La experiencia está diseñada para que cada expositor mantenga el control. <strong>No avanza sola.</strong> Cada persona abre su capítulo, reproduce su secuencia y cede el paso cuando termina su transición.</p>
+    <p class="small"><strong>Archivo:</strong> index.html · Abrir en Chrome, Edge, Firefox o Safari actuales · Pantalla completa recomendada · Sonido desactivado por defecto.</p>
+
+    <h3>Controles esenciales</h3>
+    <table class="tech-table">
+      <thead><tr><th style="width:37%">Acción</th><th style="width:23%">Tecla / control</th><th>Cuándo usarlo</th></tr></thead>
+      <tbody>
+        <tr><td>Capítulo siguiente / anterior</td><td class="key">←&nbsp; →</td><td>Cambiar de bloque sin volver al inicio.</td></tr>
+        <tr><td>Pausar o reanudar animaciones</td><td class="key">Espacio</td><td>Detener una escena para explicarla.</td></tr>
+        <tr><td>Ocultar o mostrar el panel</td><td class="key">H</td><td>Dar protagonismo a la escena.</td></tr>
+        <tr><td>Mostrar etiquetas 3D</td><td class="key">L</td><td>Señalar un elemento concreto.</td></tr>
+        <tr><td>Cronología</td><td class="key">T</td><td>Responder una duda o ubicar una fecha.</td></tr>
+        <tr><td>Fuentes</td><td class="key">F</td><td>Mostrar una referencia en preguntas.</td></tr>
+        <tr><td>Cita final</td><td class="key">Botón “Cita final”</td><td>Cierre del capítulo 10.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Las secuencias, paso a paso</h3>
+    <p>El botón <strong>Reproducir secuencia</strong> inicia la animación. Mientras corre cambia a <strong>Detener secuencia</strong>; la tira inferior muestra “EN REPRODUCCIÓN”. Si la presentación está pausada, el mismo botón pasa a <strong>Reanudar secuencia</strong>. Al terminar cambia a <strong>Repetir secuencia</strong>. <strong>Un clic inicia; otro detiene.</strong></p>
+
+    <div class="callout danger">
+      <b>El error que hay que evitar</b>
+      <p>No pulsen varias veces el botón de secuencia. Si la escena no responde, comprueben primero que la presentación no esté pausada: miren el botón central o el indicador “EN REPRODUCCIÓN”.</p>
+      <p>Si todo falla, sigan con el guion. El contenido está completo aunque la animación no esté disponible.</p>
+    </div>
+
+    <h3>Roles durante la exposición</h3>
+    <table class="tech-table">
+      <thead><tr><th style="width:10%">Persona</th><th style="width:42%">Responsabilidad</th><th>En caso de problema</th></tr></thead>
+      <tbody>
+        <tr><td class="key">P1</td><td>Apertura, pantalla completa y contexto.</td><td>Arranca la presentación y comprueba el sonido.</td></tr>
+        <tr><td class="key">P2</td><td>Respaldo técnico: conoce todos los botones.</td><td>Asume la navegación si otra persona se bloquea.</td></tr>
+        <tr><td class="key">P3</td><td>Control del tiempo y avisos de ritmo.</td><td>Señala cuándo recortar sin interrumpir.</td></tr>
+        <tr><td class="key">P4</td><td>Fuentes y preguntas de datos.</td><td>Responde o deriva a la pestaña “Fuentes”.</td></tr>
+        <tr><td class="key">P5</td><td>Cierre, cita final y despedida.</td><td>Gestiona el silencio final antes de abrir preguntas.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Antes de entrar al aula</h3>
+    <ul class="check">
+      <li>Prueben index.html en el equipo y en el proyector. Confirmen que hay internet para Three.js.</li>
+      <li>Pongan el navegador en pantalla completa y al 100 % de zoom. Desactiven notificaciones.</li>
+      <li>Abran cada capítulo una vez para comprobar que carga; vuelvan al 1 sin cerrar el navegador.</li>
+      <li>Tengan este guion impreso y una copia del archivo en un pendrive o en la nube.</li>
+      <li>Si no hay internet, la presentación entra en modo lectura: no hay 3D, pero todo el contenido y las fuentes están disponibles.</li>
+    </ul>
+
+    <div class="page-note"><span>Guion de exposición · Chernóbil</span><span>Montaje y ejecución</span></div>
+  </section>
+
+  <!-- PERSONA 1 -->
+  <section class="chapter speaker" id="p1">
+    <div class="speaker-banner">
+      <div class="main"><div class="pnum">Persona 01 / 05</div><h2>El reactor que parecía controlado</h2><div class="name-line">Nombre: ______________________________________</div></div>
+      <div class="side"><b>Capítulos</b><strong>01—02</strong><span>≈ 4 MIN</span></div>
+    </div>
+    <p class="mission">Misión: que el público entienda cómo funcionaba el RBMK y por qué la prueba de seguridad colocó al reactor en una zona prohibida.</p>
+    <div class="anchors">
+      <div class="anchor"><b>01 · Escala</b><span>4 reactores RBMK-1000 y una ciudad de 49.360 personas a 3 km.</span></div>
+      <div class="anchor"><b>02 · Diseño</b><span>3.200 MWt; grafito + agua; coeficiente de vapor positivo.</span></div>
+      <div class="anchor"><b>03 · La noche</b><span>01:23:40: AZ-5; margen de barras de 8 frente al mínimo de 15.</span></div>
+    </div>
+    <div class="script">
+      <h3>Tu guion, palabra por palabra</h3>
+      <div class="cue">Capítulo 01 · vista «Complejo». Deja que el público vea la central completa.</div>
+      <p>Buenos días. Vamos a recorrer la noche del 26 de abril de 1986 a través de diez escenas. Empezamos en el norte de Ucrania, a orillas del río Prípiat, a unos 110 kilómetros de Kiev. Allí estaba la central nuclear de Chernóbil: <strong>cuatro reactores RBMK-1000 en funcionamiento</strong> y dos más en construcción.</p>
+      <p>A tres kilómetros se levantaba Prípiat, una ciudad construida para las familias que trabajaban en la central. En abril de 1986 vivían allí <strong>49.360 personas</strong>. La central no usaba torres de refrigeración hiperbólicas, como muchas veces se imagina: se refrigeraba con un gran estanque artificial de 22 kilómetros cuadrados.</p>
+      <div class="cue">Cambia a la vista «Cómo funciona». Señala el esquema sin tapar la escena.</div>
+      <p>Cada RBMK-1000 producía <strong>3.200 megavatios térmicos</strong> y unos 1.000 megavatios eléctricos. La reacción nuclear se producía en tubos verticales de combustible. El grafito moderaba los neutrones y el agua refrigeraba el núcleo. Pero el agua también absorbía neutrones: si hervía y formaba vapor, absorbía menos y la reacción podía aumentar. Es el llamado <strong>coeficiente de vapor positivo</strong>. A baja potencia, ese comportamiento hacía al reactor especialmente difícil de controlar.</p>
+      <p>Además, el edificio no tenía una contención integral capaz de retener una liberación masiva. Esa ausencia será decisiva.</p>
+      <div class="cue">Capítulo 02 · vista «Sala de control». Mantén el panel en «Historia».</div>
+      <p>El 25 de abril, el reactor 4 iba a apagarse para mantenimiento. Aprovecharían la parada para una prueba: comprobar si la inercia de una turbina podía alimentar las bombas de refrigeración hasta que arrancaran los generadores diésel. Era una prueba eléctrica, pero se hizo sin evaluar bien sus implicaciones nucleares.</p>
+      <p>La demanda de Kiev retrasó el apagado. Ya de madrugada, la potencia cayó hasta unos <strong>30 megavatios térmicos</strong>. El xenón envenenó el núcleo. Para recuperar potencia, los operadores extrajeron demasiadas barras. A la 01:00 el reactor estaba en unos 200 megavatios, con un margen de <strong>8 barras cuando el mínimo era 15</strong>. Después entraron más bombas, bajó la reactividad y se sacaron más barras. El reactor quedó en una zona inestable.</p>
+      <div class="cue">Pulsa «Reproducir secuencia». Deja avanzar hasta el paso de las 01:23:40 y pulsa «Detener secuencia» para explicar sin prisa.</div>
+      <p>A las <strong>01:23:40</strong> se pulsó AZ-5, la parada de emergencia. Las barras empezaron a entrar. Pero su diseño incluía desplazadores de grafito que desplazaban agua y añadían reactividad en la parte inferior del núcleo. La potencia se disparó. En segundos, el reactor dejó de ser controlable.</p>
+      <p>No fue culpa de una sola persona. Fue la combinación de un diseño vulnerable, una operación en zona prohibida, información insuficiente y una cultura que no convirtió las advertencias en barreras.</p>
+      <div class="transition"><b>Transición · di esto</b><p>“El reactor ya estaba fuera de control. Lo que ocurrió en los siguientes segundos destruyó el edificio y abrió el núcleo a la atmósfera.”</p></div>
+    </div>
+    <div class="qa"><h3>Si te preguntan</h3>
+      <p><b>P.</b> ¿Qué era el coeficiente de vapor positivo? Si el agua hierve, hay menos agua líquida absorbiendo neutrones; en ciertas condiciones, la reactividad del núcleo aumenta.</p>
+      <p><b>P.</b> ¿Por qué el RBMK era distinto? Usaba grafito como moderador y tubos de presión con agua en ebullición; no tenía una contención integral como otros diseños.</p>
+      <p><b>P.</b> ¿Fue solo un error de los operadores? No. INSAG-7 señala la interacción entre diseño, operación, información y supervisión. Los operadores tuvieron un papel, pero el sistema los llevó a una zona insegura.</p>
+    </div>
+    <div class="sources"><span>Fuentes: IAEA · INSAG-7 · UNSCEAR · WNA</span><span>Persona 01 · Capítulos 01—02</span></div>
+  </section>
+
+  <!-- PERSONA 2 -->
+  <section class="chapter speaker" id="p2">
+    <div class="speaker-banner">
+      <div class="main"><div class="pnum">Persona 02 / 05</div><h2>La noche en que el reactor se abrió</h2><div class="name-line">Nombre: ______________________________________</div></div>
+      <div class="side"><b>Capítulos</b><strong>03—04</strong><span>≈ 4 MIN</span></div>
+    </div>
+    <p class="mission">Misión: explicar la excursión de potencia, las dos explosiones y el precio humano de las primeras horas, separando los hechos de las licencias visuales.</p>
+    <div class="anchors">
+      <div class="anchor"><b>01 · La explosión</b><span>01:23:40 AZ-5 · explosiones · 1.000 t de losa superior.</span></div>
+      <div class="anchor"><b>02 · El costo</b><span>134 casos de síndrome de irradiación aguda; 28 muertes en los primeros meses.</span></div>
+      <div class="anchor"><b>03 · Primeros en entrar</b><span>Bomberos a las 01:28; fuego principal controlado hacia las 05:00.</span></div>
+    </div>
+    <div class="script">
+      <h3>Tu guion, palabra por palabra</h3>
+      <div class="cue">Capítulo 03 · vista «Corte del reactor». Pulsa «Reproducir secuencia» y deja ver la excursión.</div>
+      <p>El reactor estaba en una condición inestable y el operador acababa de pulsar AZ-5. Lo que ocurrió en los siguientes segundos fue una <strong>excursión de potencia</strong>.</p>
+      <p>Las barras de control entraron, pero sus desplazadores de grafito desplazaron agua y añadieron reactividad local. El combustible se fragmentó; el agua se convirtió en vapor a presión. La losa superior, de unas <strong>1.000 toneladas</strong>, se desplazó. La primera explosión fue de vapor. Dos o tres segundos después hubo una segunda, probablemente por hidrógeno y vapor. La secuencia exacta sigue siendo objeto de estudio, pero <strong>no fue una explosión nuclear como la de una bomba atómica</strong>.</p>
+      <div class="cue">Puedes detener la secuencia después de la segunda explosión. Cambia a «Edificio» si quieres mostrar la ruina.</div>
+      <p>El edificio no tenía contención integral. El núcleo quedó expuesto. Fragmentos de combustible y grafito salieron al exterior; los incendios de la cubierta y el material incandescente mantuvieron emisiones durante unos diez días. La columna alcanzó aproximadamente un kilómetro. Lo que vemos aquí no es una nube verde: es vapor, humo, polvo y partículas radiactivas invisibles.</p>
+      <div class="cue">Capítulo 04 · vista «Incendio». Muestra a los bomberos y el camión antes de hablar.</div>
+      <p>A las <strong>01:28</strong> llegaron los bomberos de Prípiat. Creían enfrentar un incendio de cubierta. No sabían que el reactor estaba abierto ni tenían información suficiente sobre la radiación. Trabajaron para evitar que el fuego llegara al bloque 3. Las cubiertas se controlaron hacia las <strong>02:10 y 02:20</strong>; el fuego principal, hacia las <strong>05:00</strong>.</p>
+      <p>Las dosis fueron extremas. Dos trabajadores murieron por las explosiones. Entre bomberos y personal de emergencia se confirmaron <strong>134 casos de síndrome de irradiación aguda</strong>; <strong>28 murieron en los primeros tres meses</strong>. Otras 19 personas murieron entre 1987 y 2004 por causas no necesariamente atribuibles a la radiación. El público general no sufrió ARS.</p>
+      <p>La radiación ionizante no brilla ni se convierte en una sustancia verde. Es energía que puede dañar el ADN; el riesgo depende de la dosis, el tiempo y la vía de exposición. En Chernóbil, el yodo radiactivo inhalado o ingerido fue clave para la tiroides. La exposición externa fue clave para los bomberos.</p>
+      <div class="cue">Si hay tiempo, abre «¿Qué es la radiación?» durante 20–30 segundos y ciérralo. No lo conviertas en una segunda exposición.</div>
+      <p>Lo más doloroso es que entraron sin saber. La falta de información no fue un detalle: formó parte del desastre.</p>
+      <div class="transition"><b>Transición · di esto</b><p>“Mientras los bomberos trabajaban, a tres kilómetros de distancia, Prípiat seguía su sábado sin saber que su ciudad ya tenía los días contados.”</p></div>
+    </div>
+    <div class="qa"><h3>Si te preguntan</h3>
+      <p><b>P.</b> ¿Por qué pulsar AZ-5 empeoró la situación? Por el diseño de las barras: al bajar, los desplazadores de grafito añadieron reactividad local en un núcleo que ya estaba inestable.</p>
+      <p><b>P.</b> ¿Fue una explosión nuclear? No como la de una bomba. Fue una excursión de criticalidad con explosiones de vapor y gases; la segunda se asocia al hidrógeno.</p>
+      <p><b>P.</b> ¿Por qué los bomberos se expusieron? No tenían información completa ni dosimetría adecuada; creían combatir un incendio convencional y trabajaron para evitar que se propagara.</p>
+    </div>
+    <div class="sources"><span>Fuentes: IAEA · INSAG-7 · UNSCEAR · OMS</span><span>Persona 02 · Capítulos 03—04</span></div>
+  </section>
+
+  <!-- PERSONA 3 -->
+  <section class="chapter speaker" id="p3">
+    <div class="speaker-banner">
+      <div class="main"><div class="pnum">Persona 03 / 05</div><h2>Prípiat y la nube sobre Europa</h2><div class="name-line">Nombre: ______________________________________</div></div>
+      <div class="side"><b>Capítulos</b><strong>05—06</strong><span>≈ 4 MIN</span></div>
+    </div>
+    <p class="mission">Misión: conectar la escala humana de la evacuación con la escala global de la contaminación, sin confundir “detectable” con “peligroso”.</p>
+    <div class="anchors">
+      <div class="anchor"><b>01 · Prípiat</b><span>49.360 personas; evacuación a las 36 horas; tres días que nunca terminaron.</span></div>
+      <div class="anchor"><b>02 · La alerta</b><span>Detección en Forsmark, Suecia, el 27–28 de abril de 1986.</span></div>
+      <div class="anchor"><b>03 · La escala</b><span>≈150.000 km² contaminados; dosis media &lt;1 mSv en Europa lejana.</span></div>
+    </div>
+    <div class="script">
+      <h3>Tu guion, palabra por palabra</h3>
+      <div class="cue">Capítulo 05 · vista «Avenida». Deja la ciudad viva en pantalla.</div>
+      <p>Los bomberos estaban dentro. A tres kilómetros, Prípiat seguía su sábado. Era una ciudad joven, construida para los trabajadores de la central: escuelas, hospital, palacio de cultura y un parque con una noria que iba a inaugurarse el 1 de mayo.</p>
+      <p>Vivían allí <strong>49.360 personas</strong>. Nadie recibió una orden de evacuación el 26 de abril. Las autoridades esperaron: la información era incompleta, la decisión debía tomarse en Moscú y existía miedo al pánico. Mientras se organizaban los autobuses, los habitantes siguieron expuestos.</p>
+      <div class="cue">Pulsa «Reproducir evacuación». Deja que la ciudad pase de la vida a la evacuación y al abandono; detén al final.</div>
+      <p>La evacuación comenzó el <strong>27 de abril a las 14:00</strong>, unas 36 horas después del accidente. Se anunció como temporal: tres días, documentos y ropa de abrigo. La gente dejó mascotas, fotos y muebles. La ciudad se vació en pocas horas. Nunca volvieron de forma permanente. Para el 14 de mayo, unas <strong>116.000 personas</strong> habían sido evacuadas de la zona de 30 km; después se reasentaron cientos de miles más.</p>
+      <p>La noria no llegó a inaugurarse. Se convirtió en el símbolo de una promesa rota.</p>
+      <div class="cue">Capítulo 06 · vista «Dispersión». Haz clic en Ucrania y luego en Suecia; cierra la ficha si tapa el mapa.</div>
+      <p>El problema no se quedó en Prípiat. Durante unos <strong>diez días</strong>, el reactor liberó material radiactivo. El viento llevó el penacho primero al noroeste, hacia Suecia y Finlandia. El <strong>27 y 28 de abril</strong>, la central de Forsmark detectó radiactividad y activó la alerta. El 28, la URSS emitió un comunicado breve. La magnitud real llegó tarde.</p>
+      <p>La deposición fue irregular: dependió de la lluvia y de cada cambio de viento. Alrededor de <strong>150.000 km²</strong> de Ucrania, Bielorrusia y Rusia quedaron contaminados. En Europa lejana, la dosis media del primer año fue <strong>inferior a 1 mSv</strong>, pero se detectaron trazas en casi todo el continente. Detectar no es lo mismo que recibir una dosis peligrosa.</p>
+      <p>El yodo-131 afectó la tiroides; el cesio-137 persistió en suelos, alimentos y bosques. Cerca del reactor murió el Bosque Rojo; con el tiempo, la fauna se recuperó en muchas zonas porque los humanos se fueron. Eso no significa que la radiación sea buena.</p>
+      <p>El mapa no dibuja fronteras inventadas: muestra una dirección general y las partículas son un esquema.</p>
+      <div class="transition"><b>Transición · di esto</b><p>“La nube salió de Ucrania, pero la contaminación se quedó. Dentro de la zona de exclusión empezó otra batalla: la de los liquidadores.”</p></div>
+    </div>
+    <div class="qa"><h3>Si te preguntan</h3>
+      <p><b>P.</b> ¿Por qué no evacuaron antes? La información era incompleta y la decisión estaba centralizada; se subestimó la magnitud y se temía el pánico. La evacuación llegó 36 horas después.</p>
+      <p><b>P.</b> ¿Europa recibió dosis peligrosas? En la mayor parte, no: las dosis medias fueron inferiores a 1 mSv el primer año. La deposición fue irregular y hubo controles de alimentos.</p>
+      <p><b>P.</b> ¿Prípiat volvió a habitarse? No de forma permanente. Solo algunos residentes mayores regresaron de manera no oficial; la ciudad quedó abandonada.</p>
+    </div>
+    <div class="sources"><span>Fuentes: IAEA · UNSCEAR · OMS · ChNPP</span><span>Persona 03 · Capítulos 05—06</span></div>
+  </section>
+
+  <!-- PERSONA 4 -->
+  <section class="chapter speaker" id="p4">
+    <div class="speaker-banner">
+      <div class="main"><div class="pnum">Persona 04 / 05</div><h2>Los que limpiaron y lo que quedó</h2><div class="name-line">Nombre: ______________________________________</div></div>
+      <div class="side"><b>Capítulos</b><strong>07—08</strong><span>≈ 4,5 MIN</span></div>
+    </div>
+    <p class="mission">Misión: reconocer el trabajo de los liquidadores y explicar la salud y el ambiente separando siempre lo confirmado de lo estimado.</p>
+    <div class="anchors">
+      <div class="anchor"><b>01 · Liquidadores</b><span>≈600.000 registrados; 120 mSv de dosis media en 530.000 trabajadores.</span></div>
+      <div class="anchor"><b>02 · Salud</b><span>134 casos de ARS; &gt;6.000 cánceres de tiroides hasta 2005; 15 muertes entre esos casos.</span></div>
+      <div class="anchor"><b>03 · Estimaciones</b><span>Hasta 4.000 muertes (Foro) o 25.000 casos / 16.000 muertes (IARC/OMS).</span></div>
+    </div>
+    <div class="script">
+      <h3>Tu guion, palabra por palabra</h3>
+      <div class="cue">Capítulo 07 · vista «Tejados». Deja ver a los trabajadores y los restos antes de hablar.</div>
+      <p>La nube salió de Ucrania. Pero la contaminación se quedó, y con ella empezó otra historia: la de los <strong>liquidadores</strong>.</p>
+      <p>Liquidadores no fueron un solo grupo. Fueron bomberos, soldados, mineros, ingenieros, científicos, conductores, médicos y constructores. Se registraron alrededor de <strong>600.000</strong>. No todos recibieron dosis altas; los primeros equipos, sí. UNSCEAR estima una dosis media de unos <strong>120 mSv</strong> para 530.000 trabajadores de recuperación.</p>
+      <p>Limpiaron tejados, retiraron grafito y combustible, construyeron caminos, bombearon agua y gestionaron residuos. En los tejados, los “biorobots” trabajaban en turnos de menos de un minuto. Los mineros excavaron un túnel bajo el reactor para instalar una losa de refrigeración; completaron la galería en unos quince días.</p>
+      <div class="cue">Si hay tiempo, abre «Cómo se construyó» y muestra los pasos del sarcófago durante 20 segundos.</div>
+      <p>El primer sarcófago se levantó en unos <strong>206 días</strong>, con más de <strong>400.000 m³ de hormigón</strong> y <strong>7.300 toneladas de acero</strong>. Fue una medida de emergencia: no era hermético y se pensó para 20 o 30 años. Su trabajo redujo la liberación y permitió estabilizar el sitio. También dejó riesgos.</p>
+      <p>No fueron todos condenados a muerte ni todos salieron indemnes: recibieron dosis muy distintas.</p>
+      <div class="cue">Capítulo 08 · vista «Bosque» o «Puesto de control». Abre «Datos de salud» después de la primera frase.</div>
+      <p>En salud hay que separar lo confirmado de lo estimado. El síndrome de irradiación aguda afectó a <strong>134 personas</strong>; 28 murieron en los primeros tres meses. El efecto más claro a largo plazo es el <strong>cáncer de tiroides</strong> en quienes eran niños en 1986: más de <strong>6.000 casos hasta 2005</strong>, con unas <strong>15 muertes</strong> entre esos casos.</p>
+      <p>UNSCEAR no encontró un aumento general de cáncer o leucemia en la población. Algunas señales aparecen en trabajadores con dosis altas. Las estimaciones varían: el Foro de Chernóbil habla de <strong>hasta 4.000 muertes adicionales</strong> entre los más expuestos; una proyección del IARC/OMS habla de unos <strong>25.000 casos y 16.000 muertes</strong> en Europa hasta 2065. Son modelos, no recuentos.</p>
+      <p>También está el impacto psicológico y social: ansiedad, depresión, estigma y pérdida de comunidad. No se mide en sieverts, pero es real.</p>
+      <p>La zona de exclusión ucraniana ocupa unos <strong>2.600 km²</strong>; 187 comunidades quedaron abandonadas. El Bosque Rojo murió y muchas especies regresaron. La naturaleza no demuestra que la radiación sea inocua: demuestra que la ausencia de humanos también transforma el paisaje.</p>
+      <div class="transition"><b>Transición · di esto</b><p>“El reactor seguía abierto. Primero lo cubrieron con prisa; después, con una obra de ingeniería pensada para durar cien años.”</p></div>
+    </div>
+    <div class="qa"><h3>Si te preguntan</h3>
+      <p><b>P.</b> ¿Cuál es la diferencia entre confirmado y estimado? Confirmado son casos y muertes observadas. Estimado son proyecciones basadas en modelos de dosis y riesgo; no son recuentos.</p>
+      <p><b>P.</b> ¿Todos los liquidadores enfermaron? No. Las dosis variaron mucho. Los grupos más expuestos tienen mayor riesgo, pero no todos sufrieron efectos.</p>
+      <p><b>P.</b> ¿Por qué volvió la naturaleza? La ausencia de caza, agricultura y personas permitió recuperar hábitats. En los puntos calientes, la radiación sigue afectando a los organismos.</p>
+    </div>
+    <div class="sources"><span>Fuentes: IAEA · UNSCEAR 2008 · OMS · Foro de Chernóbil</span><span>Persona 04 · Capítulos 07—08</span></div>
+  </section>
+
+  <!-- PERSONA 5 -->
+  <section class="chapter speaker" id="p5">
+    <div class="speaker-banner">
+      <div class="main"><div class="pnum">Persona 05 / 05</div><h2>Encerrar el reactor para siempre</h2><div class="name-line">Nombre: ______________________________________</div></div>
+      <div class="side"><b>Capítulos</b><strong>09—10</strong><span>≈ 3,5 MIN</span></div>
+    </div>
+    <p class="mission">Misión: cerrar la historia: del sarcófago de emergencia al NSC, la situación actual y las lecciones que deja Chernóbil.</p>
+    <div class="anchors">
+      <div class="anchor"><b>01 · 1986</b><span>206 días · 400.000 m³ de hormigón · 7.300 t de acero.</span></div>
+      <div class="anchor"><b>02 · El NSC</b><span>36.000 t; 165 × 257 × 108 m; deslizado en 2016; diseño a 100 años.</span></div>
+      <div class="anchor"><b>03 · Actualidad</b><span>2025: un dron daña el NSC; la IAEA advierte la pérdida de sus funciones principales.</span></div>
+    </div>
+    <div class="script">
+      <h3>Tu guion, palabra por palabra</h3>
+      <div class="cue">Capítulo 09 · vista «Comparación». Deja los tres modelos en pantalla.</div>
+      <p>El reactor quedó abierto. Primero se cubrió con prisa. El sarcófago de 1986 se construyó en <strong>206 días</strong>, con <strong>400.000 m³ de hormigón</strong> y <strong>7.300 toneladas de acero</strong>. No era hermético y se pensó para 20 o 30 años. Dentro siguen unas <strong>200 toneladas de combustible</strong>.</p>
+      <p>Con el tiempo se deterioró. La respuesta fue el <strong>Nuevo Confinamiento Seguro</strong>: una bóveda de acero de <strong>36.000 toneladas</strong>, <strong>165 m de largo, 257 de ancho y 108 de alto</strong>. Se ensambló a 327 m del reactor y se deslizó sobre el sarcófago en <strong>noviembre de 2016</strong>. Está diseñado para <strong>100 años</strong> e incluye ventilación, control de humedad, extinción de incendios, grúas y sistemas para desmantelar el interior. La puesta en servicio culminó en 2019.</p>
+      <div class="cue">Pulsa «Recorrer etapas» si quieres hacer visible la comparación; si no, cambia a «2016».</div>
+      <p>Pero no es “para siempre”. El combustible y los residuos siguen allí. Los bloques 1, 2 y 3 están en desmantelamiento; el último reactor se apagó en 2000. La invasión rusa de 2022 interrumpió las actividades. En <strong>febrero de 2025</strong>, un dron dañó el NSC. La IAEA informó en noviembre de 2025 que la estructura perdió sus dos funciones principales: confinar materiales radiactivos y permitir el desmantelamiento seguro. Las reparaciones continúan en 2026.</p>
+      <div class="cue">Capítulo 10 · vista «Amanecer». Baja un poco el ritmo; esta es la parte final.</div>
+      <p>¿Qué aprendimos? Que la seguridad no depende solo de una máquina. Depende de cómo se diseña, de cómo se opera, de quién supervisa y de si la información circula. Ocultar un problema no lo elimina: lo amplifica. La responsabilidad no se resuelve buscando un culpable, sino analizando el sistema.</p>
+      <p>Chernóbil dejó dos trabajadores muertos por las explosiones, 28 muertes por síndrome de irradiación aguda, miles de casos de cáncer de tiroides y cientos de miles de personas desplazadas. Dejó también trabajadores con secuelas, comunidades estigmatizadas y un territorio contaminado.</p>
+      <p>La distancia entre la seguridad y la catástrofe no siempre se mide en kilómetros. A veces se mide en una advertencia que nadie quiso escuchar.</p>
+      <div class="cue">Pulsa «Cita final». Deja que la frase respire. Cuenta hasta cinco en silencio; después cierra la cita y da las gracias.</div>
+      <p>Gracias. ¿Tienen preguntas?</p>
+    </div>
+    <div class="qa"><h3>Si te preguntan</h3>
+      <p><b>P.</b> ¿El NSC resuelve el problema para siempre? No. Contiene y permite trabajar, pero el combustible y los residuos siguen allí y requieren un desmantelamiento de décadas.</p>
+      <p><b>P.</b> ¿Qué pasó con los otros reactores? Están clausurados y en desmantelamiento. El último reactor en funcionamiento se apagó en diciembre de 2000.</p>
+      <p><b>P.</b> ¿Cuál es la lección principal? La seguridad es una cultura: diseño, supervisión, transparencia y disposición a escuchar las advertencias técnicas.</p>
+    </div>
+    <div class="sources"><span>Fuentes: IAEA · EBRD · ChNPP · WNA · UNSCEAR</span><span>Persona 05 · Capítulos 09—10</span></div>
+  </section>
+
+  <!-- CIERRE -->
+  <section class="chapter" id="cierre">
+    <div class="final-marker"><div class="k">Antes de salir al escenario</div><h2>Ensayo, plan B y cierre</h2></div>
+    <p class="lead">Una exposición con diez escenas y cinco voces necesita ensayo técnico y un plan B. Usen esta página como lista de verificación final.</p>
+
+    <h3>Ensayo y ejecución</h3>
+    <ul class="check">
+      <li><strong>Ensayo 1:</strong> completo, con la presentación real y cronómetro. Objetivo: 20 minutos.</li>
+      <li><strong>Ensayo 2:</strong> versión de 15 minutos. Cada persona elimina una escena secundaria y una respuesta larga.</li>
+      <li><strong>Transiciones:</strong> cada expositor dice su última frase mirando al público; el siguiente entra y pulsa la flecha.</li>
+      <li><strong>Secuencias:</strong> probar una vez por capítulo. Un clic inicia, otro detiene; si está pausada, el botón reanuda.</li>
+      <li><strong>Preguntas:</strong> cada persona prepara sus tres respuestas. P4 consulta la pestaña “Fuentes” si hace falta.</li>
+    </ul>
+
+    <h3>Plan B si la tecnología falla</h3>
+    <table class="tech-table">
+      <thead><tr><th style="width:24%">Problema</th><th style="width:42%">Qué hacer</th><th>Qué no hacer</th></tr></thead>
+      <tbody>
+        <tr><td>No hay internet</td><td>La app entra en modo lectura con los diez capítulos, el guion y las fuentes. Continúen con este guion impreso.</td><td>No recarguen una y otra vez ni cambien de navegador en plena exposición.</td></tr>
+        <tr><td>Una escena no carga</td><td>Pasen al siguiente capítulo con →. El contenido escrito sigue disponible en el panel.</td><td>No pulsen varios botones a la vez.</td></tr>
+        <tr><td>La animación no avanza</td><td>Comprueben si la presentación está pausada. Pulsen Espacio o el botón “Reanudar secuencia”.</td><td>No hagan doble clic en el botón de la secuencia.</td></tr>
+        <tr><td>El proyector cambia de resolución</td><td>Pulsen F11 y comprueben el zoom al 100 %. Recarguen una sola vez.</td><td>No muevan la ventana durante una transición.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>La frase que no se cambia</h3>
+    <p class="final-quote">“La distancia entre la seguridad y la catástrofe no siempre se mide en kilómetros. A veces se mide en una advertencia que nadie quiso escuchar.”</p>
+    <p class="final-attribution">Reflexión final · guion de la exposición</p>
+
+    <h3>Fuentes principales</h3>
+    <ol class="source-list">
+      <li>IAEA · <a href="https://www.iaea.org/topics/chornobyl">El accidente de Chornóbil</a>.</li>
+      <li>IAEA · <a href="https://www.iaea.org/topics/chornobyl/faqs">Preguntas frecuentes</a>.</li>
+      <li>INSAG-7 · <a href="https://www-pub.iaea.org/MTCD/publications/PDF/Pub913e_web.pdf">The Chernobyl Accident: Updating of INSAG-1</a>.</li>
+      <li>UNSCEAR · <a href="https://www.unscear.org/unscear/en/areas-of-work/chernobyl.html">The Chornobyl Accident</a>.</li>
+      <li>OMS · <a href="https://www.who.int/news-room/questions-and-answers/item/radiation-the-chernobyl-accident">Radiation: The Chernobyl accident</a>.</li>
+      <li>EBRD · <a href="https://www.ebrd.com/home/what-we-do/focus-areas/nuclear-safety/making-chornobyl-safe.html">Making Chornobyl safe</a>.</li>
+      <li>ChNPP · <a href="https://www.chnpp.gov.ua/en/home">Sitio oficial</a>.</li>
+    </ol>
+    <p class="small">Las cifras y afirmaciones del guion se apoyan en las fuentes de la presentación. Las proyecciones a largo plazo se presentan como estimaciones, no como recuentos definitivos. Este documento es una ayuda para la exposición, no una transcripción literal de la experiencia interactiva.</p>
+
+    <div class="page-note"><span>Guion de exposición · Chernóbil</span><span>Ensayo, plan B y fuentes</span></div>
+  </section>
+
+</main>
+
+<div class="screen-note screen-only">
+  <strong>Impresión:</strong> este documento está maquetado en A4. Usa el botón «Imprimir / Guardar PDF» y elige “Guardar como PDF” si quieres un archivo listo para enviar. Activa “Gráficos de fondo” para conservar las bandas de color.
+</div>
+
+</body>
+</html>

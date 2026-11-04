@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08090a">
+  <meta name="description" content="Chernóbil: la noche que cambió la historia. Documental interactivo en 3D sobre el accidente nuclear del 26 de abril de 1986, con reconstrucciones, cronología y fuentes históricas.">
+  <meta name="color-scheme" content="dark">
+  <title>Chernóbil · La noche que cambió la historia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2308090a'/%3E%3Cpath d='M16 50V14h10l12 24V14h10v36H38L26 26v24z' fill='%23d6a03b'/%3E%3Crect x='16' y='54' width='32' height='3' fill='%23b3382c'/%3E%3C/svg%3E">
+  <style>
+/*__CSS__*/
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#narrative">Saltar al contenido del capítulo</a>
+
+  <!-- Lienzo WebGL. La interfaz y toda la información funcionan por encima de él. -->
+  <canvas id="webgl" aria-hidden="true"></canvas>
+
+  <!-- Fondo de seguridad: se ve si WebGL/CDN no están disponibles o mientras carga. -->
+  <div class="ambient-backdrop" aria-hidden="true">
+    <svg class="hero-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#050708"/><stop offset=".45" stop-color="#0c1114"/><stop offset=".74" stop-color="#263036"/><stop offset="1" stop-color="#0d1112"/>
+        </linearGradient>
+        <linearGradient id="groundA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1b2528"/><stop offset="1" stop-color="#080b0c"/>
+        </linearGradient>
+        <linearGradient id="waterA" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#101b1f"/><stop offset=".55" stop-color="#1c2b30"/><stop offset="1" stop-color="#0b1416"/>
+        </linearGradient>
+        <radialGradient id="glowA" cx=".72" cy=".56" r=".35">
+          <stop offset="0" stop-color="#c88e42" stop-opacity=".16"/><stop offset="1" stop-color="#c88e42" stop-opacity="0"/>
+        </radialGradient>
+        <pattern id="gridA" width="80" height="80" patternUnits="userSpaceOnUse">
+          <path d="M80 0H0V80" fill="none" stroke="#c9c4b7" stroke-opacity=".035" stroke-width="1"/>
+        </pattern>
+        <filter id="blurA"><feGaussianBlur stdDeviation="12"/></filter>
+      </defs>
+      <rect width="1600" height="900" fill="url(#skyA)"/>
+      <rect width="1600" height="900" fill="url(#gridA)"/>
+      <rect width="1600" height="900" fill="url(#glowA)"/>
+      <g fill="#d7d2c6" opacity=".5">
+        <circle cx="240" cy="130" r="1.1"/><circle cx="380" cy="210" r="1"/><circle cx="1180" cy="95" r="1.2"/><circle cx="1380" cy="190" r=".9"/><circle cx="890" cy="145" r=".8"/><circle cx="650" cy="90" r="1"/><circle cx="1510" cy="310" r=".8"/><circle cx="130" cy="320" r=".8"/><circle cx="1010" cy="260" r=".7"/><circle cx="490" cy="300" r=".7"/>
+      </g>
+      <g opacity=".72">
+        <path d="M0 590h1600v310H0z" fill="url(#groundA)"/>
+        <path d="M0 620h1600v80H0z" fill="#0b1113" opacity=".7"/>
+        <path d="M0 684h1600v216H0z" fill="url(#waterA)"/>
+      </g>
+      <g fill="#070a0b">
+        <path d="M130 620v-96h150v96zM330 620V471h180v149zM560 620V500h128v120zM735 620V426h205v194zM985 620V490h145v130zM1190 620V532h175v88z"/>
+        <path d="M735 426l20-26h166l19 26zM330 471l15-20h150l15 20z"/>
+      </g>
+      <g stroke="#88928f" stroke-opacity=".15" stroke-width="2">
+        <path d="M150 546h110M150 562h110M150 578h110M350 500h140M350 518h140M350 536h140M755 462h170M755 482h170M755 502h170M1004 516h108M1004 534h108"/>
+      </g>
+      <g fill="none" stroke="#b7b2a5" stroke-opacity=".16">
+        <path d="M820 420V218h18v202M812 236h34M812 260h34M812 284h34M812 308h34"/>
+        <path d="M807 218h26l-4-18h-18z"/>
+      </g>
+      <g fill="#c7a05b" opacity=".5">
+        <circle cx="200" cy="588" r="2"/><circle cx="250" cy="592" r="1.4"/><circle cx="470" cy="586" r="1.2"/><circle cx="800" cy="588" r="2"/><circle cx="1060" cy="584" r="1.3"/><circle cx="1300" cy="590" r="1.5"/>
+      </g>
+      <g opacity=".62" fill="#96a39f">
+        <path d="M240 660h110v-3H240zM870 650h150v-3H870zM1240 674h90v-2h-90z"/>
+        <path d="M210 690h280v-2H210zM930 700h230v-2H930zM1320 716h170v-2h-170z"/>
+      </g>
+      <g fill="#060909" opacity=".9">
+        <path d="M0 760l180-34 210 20 190-22 260 12 220-18 180 34 180-20 180 22v146H0z"/>
+        <path d="M70 746l25-70 9 1 22 68zM1330 734l30-88 10 1 26 94z"/>
+      </g>
+      <rect width="1600" height="900" fill="#000" opacity=".18" filter="url(#blurA)"/>
+    </svg>
+    <div class="backdrop-vignette"></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main id="app" class="app is-intro" data-chapter="0">
+    <header class="topbar" id="topbar">
+      <a href="#" class="brand" id="brand" aria-label="Volver al inicio de Chernóbil, la noche que cambió la historia">
+        <span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-type">CHERNÓBIL<em>Archivo interactivo · 1986—2026</em></span>
+      </a>
+
+      <div class="topbar-center" aria-hidden="true">
+        <span class="signal"><i></i><i></i><i></i></span>
+        <span id="topbar-location">SALA DE ARCHIVO / PRÍPIAT, URSS</span>
+        <span class="topbar-time" id="topbar-time">01:23:40</span>
+      </div>
+
+      <nav class="utility-nav" aria-label="Herramientas de la presentación">
+        <button class="utility-btn" id="btn-timeline" type="button" title="Abrir cronología completa (T)">
+          <span class="utility-ico">⌁</span><span class="utility-label">Cronología</span>
+        </button>
+        <button class="utility-btn" id="btn-sources" type="button" title="Abrir fuentes y referencias (F)">
+          <span class="utility-ico">§</span><span class="utility-label">Fuentes</span>
+        </button>
+        <button class="utility-btn" id="btn-sound" type="button" aria-pressed="false" title="Activar o desactivar ambiente sonoro">
+          <span class="utility-ico" id="sound-ico">◌</span><span class="utility-label" id="sound-label">Sonido</span>
+        </button>
+        <button class="utility-btn utility-icon-only" id="btn-fullscreen" type="button" title="Pantalla completa">
+          <span class="utility-ico" id="fullscreen-ico">⛶</span><span class="sr-only">Pantalla completa</span>
+        </button>
+        <button class="utility-btn utility-icon-only" id="btn-help" type="button" title="Ayuda y atajos (?)">
+          <span class="utility-ico">?</span><span class="sr-only">Ayuda</span>
+        </button>
+      </nav>
+    </header>
+
+    <nav class="chapter-rail" id="chapter-rail" aria-label="Capítulos de la presentación">
+      <div class="rail-line" aria-hidden="true"></div>
+      <ol id="rail-list"></ol>
+      <span class="rail-end" aria-hidden="true">1986<br>2026</span>
+    </nav>
+
+    <div class="scene-meta" id="scene-meta" aria-hidden="true">
+      <span class="scene-meta-dot"></span>
+      <span id="scene-mode">RECONSTRUCCIÓN 3D EN TIEMPO REAL</span>
+      <span class="scene-meta-sep">/</span>
+      <span id="scene-location">COMPLEJO DE CHERNÓBIL</span>
+    </div>
+
+    <div class="label-layer" id="label-layer" aria-hidden="true"></div>
+    <div class="map-tooltip" id="map-tooltip" aria-hidden="true"></div>
+
+    <aside class="map-card" id="map-card" aria-live="polite" hidden>
+      <button class="map-card-close" id="map-card-close" type="button" aria-label="Cerrar ficha del país">×</button>
+      <span class="map-card-kicker">PAÍS SELECCIONADO</span>
+      <h3 id="map-card-title">Ucrania</h3>
+      <p id="map-card-text"></p>
+      <button class="map-card-source" id="map-card-source" type="button">Ver fuentes <span>→</span></button>
+    </aside>
+
+    <section class="narrative" id="narrative" aria-labelledby="chapter-title" tabindex="-1">
+      <div class="panel-grab" aria-hidden="true"><span></span></div>
+      <div class="panel-head">
+        <div class="chapter-meta">
+          <span class="chapter-index" id="chapter-index">01</span>
+          <span class="chapter-eyebrow" id="chapter-eyebrow">EL CONTEXTO · 1970—1986</span>
+        </div>
+        <div class="chapter-place" id="chapter-place">Prípiat · RSS de Ucrania · URSS</div>
+        <h1 id="chapter-title" aria-live="polite">Una ciudad construida para un reactor</h1>
+        <p class="chapter-subtitle" id="chapter-subtitle">¿Qué era Chernóbil antes de la noche del 26 de abril?</p>
+        <p class="chapter-lead" id="chapter-lead"></p>
+        <div class="stat-row" id="stat-row" role="list"></div>
+        <div class="tabs" role="tablist" aria-label="Contenido del capítulo">
+          <button class="tab is-active" id="tab-history" type="button" role="tab" aria-selected="true" aria-controls="panel-history" data-tab="history">Historia</button>
+          <button class="tab" id="tab-notes" type="button" role="tab" aria-selected="false" aria-controls="panel-notes" data-tab="notes">Guion del expositor</button>
+          <button class="tab tab-icon" id="tab-collapse" type="button" title="Ocultar panel (H)" aria-label="Ocultar panel de información">⟨</button>
+        </div>
+      </div>
+
+      <div class="panel-scroll" id="panel-scroll">
+        <div class="tab-panel is-active" id="panel-history" role="tabpanel" aria-labelledby="tab-history">
+          <div class="key-grid" id="key-grid"></div>
+          <div class="story" id="story"></div>
+          <div class="reconstruction-note" id="reconstruction-note">
+            <span class="rn-mark">i</span>
+            <div><strong>Nota de reconstrucción</strong><p id="reconstruction-text"></p></div>
+          </div>
+          <div class="chapter-source-line" id="chapter-source-line"></div>
+          <blockquote class="chapter-quote" id="chapter-quote"></blockquote>
+        </div>
+        <div class="tab-panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden>
+          <div class="notes-head">
+            <span class="notes-tag">GUION ORAL</span>
+            <span class="notes-time" id="notes-time">≈ 2 min</span>
+          </div>
+          <div class="notes-body" id="notes-body"></div>
+          <div class="transition-card">
+            <span>TRANSICIÓN AL SIGUIENTE CAPÍTULO</span>
+            <p id="transition-text"></p>
+          </div>
+          <div class="notes-tip">
+            <span class="rn-mark">↳</span>
+            <p>Puedes pausar la escena, girar el modelo con el ratón y usar las vistas inferiores mientras explicas. La presentación nunca avanza sola.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-foot">
+        <button class="panel-foot-btn" id="btn-prev-panel" type="button" title="Capítulo anterior (←)">← Anterior</button>
+        <div class="panel-dots" id="panel-dots" aria-hidden="true"></div>
+        <button class="panel-foot-btn" id="btn-next-panel" type="button" title="Capítulo siguiente (→)">Siguiente →</button>
+      </div>
+    </section>
+
+    <button class="panel-reopen" id="panel-reopen" type="button" aria-label="Mostrar panel de información" title="Mostrar información (H)">
+      <span>+</span><em>Información</em>
+    </button>
+
+    <div class="scene-controls" id="scene-controls" aria-label="Controles de la escena">
+      <div class="view-pills" id="view-pills" role="group" aria-label="Vistas de cámara"></div>
+      <div class="scene-actions" id="scene-actions"></div>
+    </div>
+
+    <div class="sequence-strip" id="sequence-strip" hidden>
+      <div class="sequence-head">
+        <span id="sequence-title">SECUENCIA</span>
+        <span id="sequence-step-label">PASO 01 / 06</span>
+      </div>
+      <div class="sequence-track" id="sequence-track" role="group" aria-label="Pasos de la secuencia"></div>
+      <p class="sequence-caption" id="sequence-caption"></p>
+    </div>
+
+    <footer class="bottom-bar">
+      <div class="progress-wrap" aria-hidden="true">
+        <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-ticks" id="progress-ticks"></div>
+      </div>
+      <div class="bottom-left">
+        <span class="bottom-label">CAPÍTULO</span>
+        <span class="bottom-value"><b id="current-num">01</b><i>/ 10</i></span>
+      </div>
+      <div class="transport" aria-label="Navegación entre capítulos">
+        <button class="transport-btn" id="btn-prev" type="button" title="Capítulo anterior (←)" aria-label="Capítulo anterior">←</button>
+        <button class="transport-btn transport-play" id="btn-pause" type="button" title="Pausar animaciones (Espacio)" aria-label="Pausar animaciones" aria-pressed="false">
+          <span class="pause-bars" aria-hidden="true"><i></i><i></i></span>
+          <span class="play-tri" aria-hidden="true"></span>
+        </button>
+        <button class="transport-btn" id="btn-next" type="button" title="Capítulo siguiente (→)" aria-label="Capítulo siguiente">→</button>
+      </div>
+      <div class="bottom-right">
+        <button class="labels-toggle is-on" id="btn-labels" type="button" aria-pressed="true" title="Mostrar u ocultar etiquetas 3D (L)">
+          <span class="label-toggle-ico" aria-hidden="true">⌖</span><span>Etiquetas</span>
+        </button>
+        <span class="quality-readout" id="quality-readout" title="Calidad de renderizado adaptativa">WEBGL · AUTO</span>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <div class="reflection-overlay" id="reflection-overlay" aria-hidden="true">
+    <button class="reflection-close" id="reflection-close" type="button" aria-label="Volver a la presentación">×</button>
+    <div class="reflection-inner">
+      <span class="reflection-kicker">REFLEXIÓN FINAL · CHERNÓBIL, 1986—2026</span>
+      <blockquote id="reflection-quote">«La distancia entre la seguridad y la catástrofe no siempre se mide en kilómetros. A veces se mide en una advertencia que nadie quiso escuchar.»</blockquote>
+      <span class="reflection-rule"></span>
+      <span class="reflection-hint">Pulsa Esc o el botón × para volver</span>
+    </div>
+  </div>
+
+  <!-- Portada cinematográfica. El botón se activa cuando Three.js está listo. -->
+  <section class="start-screen" id="start-screen" aria-labelledby="start-title">
+    <div class="start-grid" aria-hidden="true"></div>
+    <div class="start-side start-side-left" aria-hidden="true">
+      <span>EXPEDIENTE 04/1986</span>
+      <span>51.3890° N<br>30.0990° E</span>
+    </div>
+    <div class="start-side start-side-right" aria-hidden="true">
+      <span>26 · 04 · 1986</span>
+      <span>01:23:40<br>HORA LOCAL</span>
+    </div>
+    <div class="start-content">
+      <p class="start-kicker"><span class="live-dot"></span> DOCUMENTAL INTERACTIVO · 10 ESCENAS</p>
+      <h1 class="start-title" id="start-title">CHERNÓBIL</h1>
+      <div class="start-rule"><i></i><span>LA NOCHE QUE CAMBIÓ LA HISTORIA</span></div>
+      <p class="start-copy">Un recorrido tridimensional por la central, la ciudad de Prípiat y las consecuencias de la catástrofe que ocurrió el 26 de abril de 1986.</p>
+      <button class="enter-btn" id="enter-btn" type="button" disabled>
+        <span class="enter-btn-label" id="enter-label">PREPARANDO RECONSTRUCCIÓN</span>
+        <span class="enter-btn-arrow" aria-hidden="true">→</span>
+        <span class="enter-btn-load" aria-hidden="true"><i></i></span>
+      </button>
+      <div class="start-footnotes">
+        <span>3D EN TIEMPO REAL</span><span>15—20 MIN</span><span>CONTROL TOTAL DEL EXPOSITOR</span>
+      </div>
+    </div>
+    <div class="start-bottom" aria-hidden="true">
+      <span>RECONSTRUCCIÓN EDUCATIVA · NO ES MATERIAL DE ARCHIVO</span>
+      <span>DESLIZA · GIRA · ACERCA</span>
+      <span>01 / 10</span>
+    </div>
+    <div class="start-error" id="start-error" role="alert" hidden>
+      El motor 3D no pudo cargarse. <button type="button" id="reading-link">Abrir modo lectura</button>
+    </div>
+  </section>
+
+  <div class="chapter-transition" id="chapter-transition" aria-hidden="true">
+    <div class="ct-curtain ct-left"></div>
+    <div class="ct-curtain ct-right"></div>
+    <div class="ct-content">
+      <span class="ct-kicker">CAPÍTULO <b id="ct-num">01</b> / 10</span>
+      <strong id="ct-title">EL CONTEXTO</strong>
+      <span class="ct-line"></span>
+      <span class="ct-place" id="ct-place">PRÍPIAT · 1986</span>
+    </div>
+  </div>
+
+  <div class="modal-root" id="modal-root" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+      <header class="modal-head">
+        <div><span class="modal-kicker" id="modal-kicker">ARCHIVO</span><h2 id="modal-title">Título</h2></div>
+        <button class="modal-close" id="modal-close" type="button" aria-label="Cerrar ventana">×</button>
+      </header>
+      <div class="modal-body" id="modal-body"></div>
+    </section>
+  </div>
+
+  <div class="fallback" id="fallback" hidden>
+    <div class="fallback-inner">
+      <div class="fallback-head">
+        <div>
+          <span class="fallback-kicker">MODO LECTURA · SIN WEBGL</span>
+          <h1>CHERNÓBIL<em>La noche que cambió la historia</em></h1>
+        </div>
+        <a href="https://www.iaea.org/topics/chornobyl" target="_blank" rel="noopener noreferrer">Fuente principal: IAEA ↗</a>
+      </div>
+      <p class="fallback-lead">El navegador no pudo iniciar el motor 3D. La presentación sigue disponible como documento de lectura, con la misma cronología, el guion del expositor y las referencias.</p>
+      <div class="fallback-nav" id="fallback-nav"></div>
+      <div class="fallback-content" id="fallback-content"></div>
+      <div class="fallback-sources" id="fallback-sources"></div>
+      <p class="fallback-end">Reconstrucción educativa · 2026 · Fuentes: IAEA, UNSCEAR, OMS, EBRD, ChNPP.</p>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="noscript"><h1>Chernóbil · La noche que cambió la historia</h1><p>Esta experiencia necesita JavaScript. Actívalo y vuelve a cargar la página.</p></div>
+  </noscript>
+
+  <script>
+/*__DATA__*/
+  </script>
+  <script>
+/*__MAP__*/
+  </script>
+  <script>
+/*__APP__*/
+  </script>
+</body>
+</html>
